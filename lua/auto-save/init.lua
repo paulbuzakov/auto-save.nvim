@@ -59,6 +59,8 @@ local function debounce(lfn, duration)
 end
 
 function M.save(buf)
+  callback('formatting')
+
   buf = buf or api.nvim_get_current_buf()
 
   callback("before_asserting_save")
