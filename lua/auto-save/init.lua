@@ -13,8 +13,6 @@ local AUTO_SAVE_COLOR = "MsgArea"
 local BLACK = "#000000"
 local WHITE = "#ffffff"
 
-wasFormattingProcess = false
-
 local callback = function(callback_name)
     if type(cnf.opts.callbacks[callback_name]) == "function" then
         cnf.opts.callbacks[callback_name]()
@@ -61,13 +59,6 @@ local function debounce(lfn, duration)
 end
 
 function M.save(buf)
-    print(wasFormattingProcess)
-
-    if wasFormattingProcess == false then
-        wasFormattingProcess = true
-        callback("formatting")
-    end
-
     buf = buf or api.nvim_get_current_buf()
 
     callback("before_asserting_save")
@@ -93,8 +84,6 @@ function M.save(buf)
             cmd("silent! write")
         end)
     end
-
-    wasFormattingProcess = false
 
     callback("after_saving")
 
